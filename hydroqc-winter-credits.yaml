@@ -5,7 +5,7 @@ blueprint:
 
     Ce blueprint offre les bases pour faire la gestion des événements de pointes critiques
     dans le cadre du programme de [crédit hivernal d''Hydro-Québec](https://www.hydroquebec.com/residentiel/espace-clients/tarifs/option-credit-hivernal.html).
-    Il a été créé pour fonctionner avec le projet [Hydroqc](https://hydroqc.ca) qui
+    Il a été créé pour fonctionner avec le projet [hydro_quebec](https://hydro_quebec.ca) qui
     extrait les données de votre compte à partir du portail client d''Hydro-Québec.
 
 
@@ -15,7 +15,7 @@ blueprint:
     ### Entités de temps et de criticité de la période.
 
     Les valeurs des premières configurations seront autoremplies si le nom de votre
-    contrat dans votre configuration hydroqc est "maison". Autrement vous devrez sélectionner
+    contrat dans votre configuration hydro_quebec est "maison". Autrement vous devrez sélectionner
     les entités correspondantes.
 
 
@@ -27,7 +27,7 @@ blueprint:
 
 
     Vous trouverez plus de détail sur les logiques applicables pour les crédits hivernaux
-    dans notre [documentation](https://hydroqc.ca/fr/docs/winter-credits/).
+    dans notre [documentation](https://hydro_quebec.ca/fr/docs/winter-credits/).
 
     '
   domain: automation
@@ -35,60 +35,54 @@ blueprint:
     pre_heat:
       name: Début pré-chauffage
       description: Moment avant une pointe critique où nous voulons augmenter le chauffage de la résidence en vu de la pointe. Cette période se termine lorsque la pointe critique commence.
-      default: sensor.hydroqc_maison_next_pre_heat_start
+      default: sensor.hydro_quebec_maison_next_pre_heat_start
       selector:
         entity:
-          integration: mqtt
           device_class: timestamp
           domain: sensor
           multiple: false
     peak_start:
       name: Début pointe
-      description: Début de la période de pointe (sensor.hydroqc_maison_next_peak_start)
-      default: sensor.hydroqc_maison_next_peak_start
+      description: Début de la période de pointe (sensor.hydro_quebec_maison_next_peak_start)
+      default: sensor.hydro_quebec_maison_next_peak_start
       selector:
         entity:
-          integration: mqtt
           device_class: timestamp
           domain: sensor
           multiple: false
     peak_end:
       name: Fin pointe
-      description: Fin de la période de pointe (sensor.hydroqc_maison_next_peak_end)
-      default: sensor.hydroqc_maison_next_peak_end
+      description: Fin de la période de pointe (sensor.hydro_quebec_maison_next_peak_end)
+      default: sensor.hydro_quebec_maison_next_peak_end
       selector:
         entity:
-          integration: mqtt
           device_class: timestamp
           domain: sensor
           multiple: false
     anchor_start:
       name: Début ancrage
-      description: Début de la période d'ancrage (sensor.hydroqc_maison_next_anchor_start)
-      default: sensor.hydroqc_maison_next_anchor_start
+      description: Début de la période d'ancrage (sensor.hydro_quebec_maison_next_anchor_start)
+      default: sensor.hydro_quebec_maison_next_anchor_start
       selector:
         entity:
-          integration: mqtt
           device_class: timestamp
           domain: sensor
           multiple: false
     anchor_end:
       name: Fin ancrage
-      description: Fin de la période d'ancrage (sensor.hydroqc_maison_next_anchor_end)
-      default: sensor.hydroqc_maison_next_anchor_end
+      description: Fin de la période d'ancrage (sensor.hydro_quebec_maison_next_anchor_end)
+      default: sensor.hydro_quebec_maison_next_anchor_end
       selector:
         entity:
-          integration: mqtt
           device_class: timestamp
           domain: sensor
           multiple: false
     critical:
       name: Indicateur Critique
-      description: Indicateur de pointe critique (binary_sensor.hydroqc_maison_next_peak_period_critical)
-      default: binary_sensor.hydroqc_maison_next_peak_period_critical
+      description: Indicateur de pointe critique (binary_sensor.hydro_quebec_maison_next_peak_period_critical)
+      default: binary_sensor.hydro_quebec_maison_upcoming_critical_peak
       selector:
         entity:
-          integration: mqtt
           domain: binary_sensor
           multiple: false
     pre_heat_start_action:
@@ -152,7 +146,6 @@ blueprint:
       default: []
       selector:
         action: {}
-  source_url: https://raw.githubusercontent.com/hydroqc/hass-blueprint-hydroqc/main/hydroqc-winter-credits.yaml
 mode: parallel
 trigger:
 - platform: time
